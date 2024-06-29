@@ -16,12 +16,6 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
-// Connect to MongoDB
-// const run = async () => {
-//   await connectDB();
-// }
-
-
 // Use auth routes
 app.use('/api', AuthRoutes);
 
