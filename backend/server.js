@@ -1,21 +1,32 @@
-const express = require("express");
-const connectDB = require("./database/connectDB");
-const dotenv = require("dotenv");
+import express from 'express';
+import dotenv from 'dotenv';
+import AuthRoutes from './routes/AuthRoutes.js';
+import cookieParser from 'cookie-parser';
+import connectDB from './database/connectDB.js';
+
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.get("/", async (req, res) => {
-  try {
-    await connectDB();
-    res.send("Connected to MongoDB");
-  } catch (err) {
-    res.status(500).send("Failed to connect to MongoDB");
-  }
+app.use(express.json());
+app.use(cookieParser());
+
+app.get('/', (req, res) => {
+    res.send('Hello World');
 });
 
+// Connect to MongoDB
+// const run = async () => {
+//   await connectDB();
+// }
+
+
+// Use auth routes
+app.use('/api', AuthRoutes);
+
+// Start the server
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-  console.log(`Connected to MongoDB`)
+  connectDB();
+    console.log(`Server is running on port ${port}`);
 });
